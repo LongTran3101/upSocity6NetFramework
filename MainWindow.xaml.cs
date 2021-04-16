@@ -46,6 +46,7 @@ namespace Upsocity6WpfNetcore
         int soLuonganh1Ngay;
         int soLanLoi;
         int demlanlogin = 0;
+        string pathChromeExe;
 
 
         int j = 0;
@@ -131,6 +132,8 @@ namespace Upsocity6WpfNetcore
             soLuongAnh1lan = Int32.Parse(soAnhUpMotLan.Text);
             soLuonganh1Ngay = Int32.Parse(soAnhUp.Text);
             soLanLoi = Int32.Parse(soLanLoiTxt.Text);
+            pathChromeExe= PathChorme.Text;
+
             thread = new Thread(() =>
             {
 
@@ -149,7 +152,7 @@ namespace Upsocity6WpfNetcore
                 {
                     try
                     {
-                        string FullPath = ".\\chromium\\win32-564778\\chrome-win32\\chrome.exe";
+                        string FullPath = pathChromeExe;
                         options.BinaryLocation = FullPath;
                         options.AddArguments("user-data-dir=ChromeProfile");
                         options.AddArguments("--disable-notifications");
@@ -325,7 +328,7 @@ namespace Upsocity6WpfNetcore
                         try
                         {
                             webElement.Click();
-                            Thread.Sleep(500);
+                            Thread.Sleep(1000);
                         }
                         catch
                         {
@@ -370,7 +373,8 @@ namespace Upsocity6WpfNetcore
             }
             catch (Exception)
             {
-
+                driver.Navigate().Refresh();
+                Thread.Sleep(2000);
                 j++;
                 notify2.DataValue = "Lỗi thực hiện lại task  " + j;
                 task(imageList, driver, username, pass, soLuongAnh1lan, soLuonganh1Ngay, soLanLoi);
@@ -520,7 +524,7 @@ namespace Upsocity6WpfNetcore
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            pathChromeExe = PathChorme.Text;
             thread = new Thread(() =>
             {
 
@@ -528,7 +532,7 @@ namespace Upsocity6WpfNetcore
                 {
                     notify2.DataValue = "www.howkteam.com";
 
-                    string FullPath = ".\\chromium\\win32-564778\\chrome-win32\\chrome.exe";
+                    string FullPath = pathChromeExe;
                     options.BinaryLocation = FullPath;
                     options.AddArguments("user-data-dir=ChromeProfile");
                     options.AddArguments("--disable-notifications");
@@ -582,6 +586,7 @@ namespace Upsocity6WpfNetcore
             string profile = lines[2];
             string userdata = lines[3];
             string chromeexe = lines[4];
+            PathChorme.Text = chromeexe;
             userName.Text=username;
             passWord.Text = pass;
         }

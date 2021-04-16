@@ -32,6 +32,8 @@
             <Button Content="Button" HorizontalAlignment="Left" Margin="146,349,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_3"/>
             <Button Content="Pause" HorizontalAlignment="Left" Margin="146,234,0,0" VerticalAlignment="Top" Height="32" Width="120" Click="OnPauseClick"/>
             <Button Content="ResumeClick" HorizontalAlignment="Left" Margin="290,234,0,0" VerticalAlignment="Top" Height="32" Width="120" Click="OnResumeClick" />
+            <Label Content="PathChorme" HorizontalAlignment="Left" Margin="35,148,0,0" VerticalAlignment="Top" Height="27" Width="89" RenderTransformOrigin="0.493,-0.018"/>
+            <TextBox x:Name="PathChorme" HorizontalAlignment="Left" Margin="146,149,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="423" />
         </Grid>
 
     </Grid>
