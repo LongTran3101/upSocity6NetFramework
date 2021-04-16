@@ -47,7 +47,13 @@ namespace Upsocity6WpfNetcore
         int soLanLoi;
         int demlanlogin = 0;
         string pathChromeExe;
-
+        //.\\chromium\\win32-564778\\chrome-win32\\chrome.exe
+        string ScripclickAll = "var items = document.querySelectorAll(\".undefined\");\n"
+                    + "for (var i = 0; i < items.length; i++) {\n"
+                    + "    \n"
+                    + "        items[i].click();\n"
+                    + "  \n"
+                    + "}";
 
         int j = 0;
         Thread thread;
@@ -117,7 +123,7 @@ namespace Upsocity6WpfNetcore
             catch
             {
                 //System.Environment.Exit(0);
-                MessageBox.Show("Error read excel!");
+                //MessageBox.Show("Error read excel!");
                 throw;
             }
 
@@ -145,7 +151,7 @@ namespace Upsocity6WpfNetcore
                 {
                     stop = true;
                     notify2.DataValue = "Error read excel!";
-                    MessageBox.Show("Error read excel!");
+                    //MessageBox.Show("Error read excel!");
                 }
 
                 if (stop == false)
@@ -156,6 +162,8 @@ namespace Upsocity6WpfNetcore
                         options.BinaryLocation = FullPath;
                         options.AddArguments("user-data-dir=ChromeProfile");
                         options.AddArguments("--disable-notifications");
+                        options.AddArguments("disable-extensions");
+                        options.AddArguments("--no-sandbox");
                         options.AddArguments("start-maximized");
                         options.AddExcludedArgument("enable-automation");
                         options.AddAdditionalCapability("useAutomationExtension", false);
@@ -171,7 +179,7 @@ namespace Upsocity6WpfNetcore
                     catch (Exception)
                     {
                         notify2.DataValue = "Lỗi khởi tạo chrome";
-                        MessageBox.Show("Lỗi khởi tạo chrome");
+                        //MessageBox.Show("Lỗi khởi tạo chrome");
                     }
                 }
 
@@ -321,20 +329,27 @@ namespace Upsocity6WpfNetcore
                         des.SendKeys(c.ToString());
                         Thread.Sleep(150);
                     }
+
+
+
                     Thread.Sleep(randomNumber(5000, 2000));
-                    List<IWebElement> elemen = driver.FindElements(By.CssSelector("div.undefined")).ToList();
-                    foreach (IWebElement webElement in elemen)
-                    {
-                        try
-                        {
-                            webElement.Click();
-                            Thread.Sleep(1000);
-                        }
-                        catch
-                        {
-                            continue;
-                        }
-                    }
+                    IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                    js.ExecuteScript(ScripclickAll);
+                    Thread.Sleep(randomNumber(5000, 4000));
+                    js.ExecuteScript(ScripclickAll);
+                    //List<IWebElement> elemen = driver.FindElements(By.CssSelector("div.undefined")).ToList();
+                    //foreach (IWebElement webElement in elemen)
+                    //{
+                    //    try
+                    //    {
+                    //        webElement.Click();
+                    //        Thread.Sleep(1000);
+                    //    }
+                    //    catch
+                    //    {
+                    //        continue;
+                    //    }
+                    //}
                     notify2.DataValue = "Click publish  " + j;
                     Thread.Sleep(randomNumber(5000, 4000));
                     driver.FindElement(By.XPath("//*[@id=\"creativesView\"]/div/div[2]/div[3]/div/div[2]/div/input"))
