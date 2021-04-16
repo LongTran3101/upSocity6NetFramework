@@ -58,7 +58,7 @@ namespace Upsocity6WpfNetcore
         int j = 0;
         Thread thread;
 
-
+ 
         public class Image
         {
             public string Foldername { get; set; }
