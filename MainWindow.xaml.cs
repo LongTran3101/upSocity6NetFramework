@@ -44,9 +44,11 @@ namespace Upsocity6WpfNetcore
         string pass;
         int soLuongAnh1lan;
         int soLuonganh1Ngay;
-        int soLanLoi;
+       
         int demlanlogin = 0;
         string pathChromeExe;
+        int soLanLoi=0;
+        int demSoLanLoi = 0;
         //.\\chromium\\win32-564778\\chrome-win32\\chrome.exe
         string ScripclickAll = "var items = document.querySelectorAll(\".undefined\");\n"
                     + "for (var i = 0; i < items.length; i++) {\n"
@@ -198,6 +200,7 @@ namespace Upsocity6WpfNetcore
 
             try
             {
+                
                 waitHandle.WaitOne();
                 notify2.DataValue = "Bắt đầu + j";
                 string exeFile = (new System.Uri(Assembly.GetEntryAssembly().CodeBase)).AbsolutePath;
@@ -384,14 +387,29 @@ namespace Upsocity6WpfNetcore
 
                     }
                     j++;
+                    demSoLanLoi = 0;
 
                 }
-
+                notify2.DataValue = "đã hết  " + j;
 
             }
             catch (Exception)
             {
-                driver.Navigate().Refresh();
+                demSoLanLoi++;
+                notify2.DataValue = "Lỗi đang thực hiện lại số lần lỗi   " + demSoLanLoi + "Anh:" + j;
+                if (demSoLanLoi>=5)
+                {
+                    driver.Quit();
+                    driver = new ChromeDriver(driverService, options);
+                    if (driver != null)
+                    {
+                        task(imageList, driver, username, pass, soLuongAnh1lan, soLuonganh1Ngay, soLanLoi);
+                    }
+                }
+                notify2.DataValue = "Lỗi đang thực hiện lại số lần lỗi   " + demSoLanLoi + "Anh:" + j;
+                Thread.Sleep(2000);
+                IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                driver.ExecuteScript("window.onbeforeunload = function(e){};");
                 Thread.Sleep(2000);
                 j++;
                 notify2.DataValue = "Lỗi thực hiện lại task  " + j;
