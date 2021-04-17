@@ -366,6 +366,9 @@ namespace Upsocity6WpfNetcore
                     notify2.DataValue = "Wait publish  " + j;
                     wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector("span.statusPublished_artworkDetails_13LpC")));
                     Thread.Sleep(randomNumber(5000, 2000));
+                    driver.Navigate().GoToUrl("https://society6.com/artist-studio");
+                    
+                    Thread.Sleep(randomNumber(7000, 6000));
                     notify2.DataValue = "Click upload tiep  " + j;
                     driver.FindElement(By.CssSelector("button.uploadBtn_banner_2b9z8")).Click();
                     Thread.Sleep(randomNumber(5000, 2000));
